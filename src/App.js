@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
+import BlogPage from './components/BlogPage';
+import ProfilePage from './components/ProfilePage';
+import Navbar from './components/Navbar';
+import BlogContext from './contexts/blog-context';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: [
+        {
+          id: 1,
+          title: 'First Post'
+        },
+        {
+          id: 2,
+          title: 'Second Post'
+        },
+        {
+          id: 3,
+          title: 'Third Post'
+        },
+        {
+          id: 4,
+          title: 'Fourth Post'
+        },
+      ]
+    }
+  }
+
+  render() {
+    return (
+      <>
+        <Navbar />
+        <BlogContext.Provider value={{ posts: this.state.posts }}>
+          <Switch>
+            <Route exact path='/' component={BlogPage} />
+            <Route path='/profile' component={ProfilePage} />
+          </Switch>
+        </BlogContext.Provider>
+      </>
+    );
+  }
 }
 
 export default App;
